@@ -21,6 +21,7 @@ namespace CarDealershipApp.Controllers
         }
 
         // GET: Car
+        [Authorize]
         public async Task<IActionResult> Index()
         {
               return _context.CarModel != null ? 
@@ -29,6 +30,7 @@ namespace CarDealershipApp.Controllers
         }
 
         // GET: Car/ShowSearchForm
+        [Authorize]
         public async Task<IActionResult> ShowSearchForm()
         {
             return View();
@@ -36,6 +38,7 @@ namespace CarDealershipApp.Controllers
         }
 
         // GET: Car/ShowSearchResults
+        [Authorize]
         public async Task<IActionResult> ShowSearchResults(string SearchPhrase)
         {
             return _context.CarModel != null ?
