@@ -1,0 +1,43 @@
+﻿@using System.Globalization;
+@model CarDealershipApp.Models.CarModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>CarModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Make)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Make)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.CarModelYear)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.CarModelYear)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-8">
+            @string.Format(new CultureInfo("en-US"), "{0:C}", Model.Price)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
