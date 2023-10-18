@@ -9,10 +9,10 @@ namespace CarDealershipApp.Models
         public int Id { get; set; }
 
         [DisplayName("Car manufacturer")]
-        public string Make { get; set; }
+        public string? Make { get; set; }
 
         [DisplayName("Car model")]
-        public string Model { get; set; }
+        public string? Model { get; set; }
 
         [DisplayName("Year of make")]
         public int CarModelYear { get; set; }
@@ -21,5 +21,11 @@ namespace CarDealershipApp.Models
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
+        public List<CarModel>? CarList { get; set; }
+
+        public int CurrentPageIndex { get; set; }
+
+        public int PageCount { get; set; }
     }
+
 }

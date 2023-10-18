@@ -21,19 +21,37 @@ namespace CarDealershipApp.Controllers
         }
 
         // GET: Car
-        [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPageIndex)
         {
               return _context.CarModel != null ? 
-                          View(await _context.CarModel.ToListAsync()) :
+                          View(PaginatedCars(currentPageIndex)) :
                           Problem("Entity set 'ApplicationDbContext.CarModel'  is null.");
+        }
+
+        private CarModel PaginatedCars(int currentPage)
+        {
+            int maxRows = 10;
+            var cars = _context.CarModel.ToList();
+
+            CarModel cModel = new CarModel();
+
+            cModel.CarList = cars.OrderBy(customer => customer.Id)
+                        .Skip((currentPage - 1) * maxRows)
+                        .Take(maxRows).ToList();
+
+            double pageCount = (double)((decimal)cars.Count() / Convert.ToDecimal(maxRows));
+            cModel.PageCount = (int)Math.Ceiling(pageCount);
+
+            cModel.CurrentPageIndex = currentPage;
+
+            return cModel;
         }
 
         // GET: Car/ShowSearchForm
         [Authorize]
-        public async Task<IActionResult> ShowSearchForm()
+        public Task<IActionResult> ShowSearchForm()
         {
-            return View();
+            return Task.FromResult<IActionResult>(View());
 
         }
 
