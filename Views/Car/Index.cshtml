@@ -1,9 +1,18 @@
 ﻿@using System.Globalization
 @model CarDealershipApp.Models.CarModel
+@using Microsoft.AspNetCore.Mvc.Rendering
 
 @{
     ViewData["Title"] = "Index";
 }
+
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <label asp-for="CarList[0].Make"></label>
+        @Html.DropDownList("selectedMake", (SelectList)ViewBag.Makes, "All Makes", new { @class = "form-control", onchange = "this.form.submit();" })
+    </div>
+</form>
+
 
 <h1>Car Dealership Car List</h1>
 

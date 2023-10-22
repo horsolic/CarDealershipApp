@@ -21,17 +21,28 @@ namespace CarDealershipApp.Controllers
         }
 
         // GET: Car
-        public async Task<IActionResult> Index(int currentPageIndex)
+        public async Task<IActionResult> Index(int currentPageIndex, string selectedMake)
         {
-              return _context.CarModel != null ? 
-                          View(PaginatedCars(currentPageIndex)) :
-                          Problem("Entity set 'ApplicationDbContext.CarModel'  is null.");
+            var makes = await _context.CarModel.Select(c => c.Make).Distinct().ToListAsync();
+            ViewBag.Makes = new SelectList(makes);
+
+            return _context.CarModel != null ?
+                View(PaginatedCars(currentPageIndex, selectedMake)) :
+                Problem("Entity set 'ApplicationDbContext.CarModel'  is null.");
         }
 
-        private CarModel PaginatedCars(int currentPage)
+
+        private CarModel PaginatedCars(int currentPage, string selectedMake)
         {
             int maxRows = 10;
-            var cars = _context.CarModel.ToList();
+            var carsQuery = _context.CarModel.AsQueryable();
+
+            if (!string.IsNullOrEmpty(selectedMake))
+            {
+                carsQuery = carsQuery.Where(c => c.Make == selectedMake);
+            }
+
+            var cars = carsQuery.ToList();
 
             CarModel cModel = new CarModel();
 
@@ -47,23 +58,32 @@ namespace CarDealershipApp.Controllers
             return cModel;
         }
 
-        // GET: Car/ShowSearchForm
-        [Authorize]
-        public Task<IActionResult> ShowSearchForm()
-        {
-            return Task.FromResult<IActionResult>(View());
 
-        }
+        // GET: Car/ShowSearchForm
+        //[Authorize]
+        //public Task<IActionResult> ShowSearchForm()
+        //{
+        //    return Task.FromResult<IActionResult>(View());
+
+        //}
 
         // GET: Car/ShowSearchResults
-        [Authorize]
-        public async Task<IActionResult> ShowSearchResults(string SearchPhrase)
-        {
-            return _context.CarModel != null ?
-                          View("Index", await _context.CarModel.Where(j => j.Make.Contains(SearchPhrase)).ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Joke'  is null.");
+        //[Authorize]
+        //public async Task<IActionResult> ShowSearchResults(string SearchPhrase)
+        //{
+        //    var carModels = await _context.CarModel
+        //                                 .Where(j => j.Make.Contains(SearchPhrase))
+        //                                 .ToListAsync();
 
-        }
+        //    var viewModel = new CarModel 
+        //    {
+        //        CarList = carModels
+        //    };
+
+        //    return View("Index", viewModel);
+        //}
+
+
 
         // GET: Car/Details/5
         public async Task<IActionResult> Details(int? id)
