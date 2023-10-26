@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CarDealershipApp.Data;
+using CarDealershipApp.DataAccess.Data;
 using CarDealershipApp.Models;
 using Microsoft.AspNetCore.Authorization;
 

@@ -1,5 +1,5 @@
 
-using CarDealershipApp.Data;
+using CarDealershipApp.DataAccess.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
